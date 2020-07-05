@@ -1,0 +1,19 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark badge-dark py-3 px-5">
+    <a class="navbar-brand" href="{% url 'films:home' %}">Home</a>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="{% url 'films:movies' %}">All Movies</a>
+      <a class="nav-item nav-link" href="#">Directors</a>
+      <a class="nav-item nav-link" href="#">Series</a>
+    </div>
+    <div class=" align-content-center" style="margin-left: 60%;" >
+      <form action="{% url 'films:search' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group " class="search-form">
+        <input style= "border-radius: 10px; " class="px-2 py-1 text-center hoverabl" type="text" name="q" placeholder="search for a movie">
+        </div>
+      </form>
+    </div>
+  </nav>
+
+</div>

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+    <div class="row">
+        <div class="col container m-5 px-4 py-2" ">
+            <div class=" card w-50">
+            {% if movie.poster %}
+            <img src='{{ movie.poster.url }}' class="card-img">
+            {% endif %}
+
+            <div class="card-body">
+                <h3 class="card-title">{{movie.title}}</h3>
+                <h6 class="card-title">Directed by: <b>{{movie.director}}</b></h6>
+
+                <h6>Movie ratings: {{votes}}</h6>
+                <p class="card-text">{{movie.description}}</p>
+                <hr>
+                <h5>Vote below</h5>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1" name="customRadioInline"
+                                 class="custom-control-input" value=1>
+                                <label class="custom-control-label" for="customRadioInline1">1</label>
+                            </div>
+
+                            <div class="custom-control custom-radio custom-control-inline">
+                                 <input type="radio" id="customRadioInline2" name="customRadioInline"
+                                     class="custom-control-input" value=2>
+                                <label class="custom-control-label" for="customRadioInline2">2</label>
+                            </div>
+
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline3" name="customRadioInline"
+                                    class="custom-control-input" value=3>
+                                <label class="custom-control-label" for="customRadioInline3">3</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline4" name="customRadioInline"
+                                    class="custom-control-input" value=4>
+                                <label class="custom-control-label" for="customRadioInline4">4</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline5" name="customRadioInline"
+                                    class="custom-control-input" value=5>
+                                <label class="custom-control-label" for="customRadioInline5">5</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+    <div class="col container m-5 py-2">
+        <div class="list-group">
+            <h2 class="mb-4">Similar Movies</h2>
+
+            {% for mov in similar %}
+            <a href="{{mov.get_absolute_url}}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{mov.title}}</h5>
+                    <small>{{movie.director}}</small>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</body>
+{% endblock %}

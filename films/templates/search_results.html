@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div style="margin-left: 40%; margin-top: 10%;">
+    {% if queryset %}
+    <div style="align-items: center;">
+        <h2 class="my-2">Results of your search</h2>
+        <br><br>
+        <div class="card" style="width: 18rem; align-items: center;">
+            <ul class="list-group list-group-flush">
+                {% for movie in queryset %}
+                <li class="list-group-item"><a href="{{ movie.get_absolute_url }}">
+                        <h2>{{ movie.title }}</h2>
+                    </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    {% else %}
+    <h3 class="">No results found </h3>
+
+    {% endif %}
+</div>
+{% endblock %}

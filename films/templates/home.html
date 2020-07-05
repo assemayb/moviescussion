@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<main>
+    <div class="container">
+        <div class="row" style="padding: 4rem">
+            <div class="col border" style="padding: 1rem; margin-right: 5rem;">
+                    {% for film in movies.all %}
+                    <a href="{{ film.get_absolute_url }}">
+                        <h2>{{film.title}}</h2>
+                    </a>
+                    <h5>{{film.director}}</h5>
+                    <h5 class="hoverable">{{film.production_year}}</h5>
+                    <hr>
+                    {%endfor%}
+            </div>
+            <div class="col px-3 ml-2 bg-dark h-100 py-2 text-light" style="border-radius: 10px;">
+                <h2 class=" text-light text-center ">Add Movies</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="movie_title">Movie Title</label>
+                        {% render_field form.title class="form-control col=3"%}
+                    </div>
+                    <div class="form-group">
+                        <label for="movie_director">Director</label>
+                        {% render_field form.director class="form-control" col=3  %}
+                    </div>
+                    <div class="form-group">
+                        <label for="movie_year">Production Year</label>
+                        {% render_field form.production_year class="form-control" col=2 %}
+
+                    </div>
+                    <div class="form-group">
+                        <label for="movie_description">Description</label>
+                        {% render_field form.description class="form-control" col=3%}
+
+                    </div>
+                    <!-- <input type="file" class="form-control-file" id="exampleFormControlFile1"> -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

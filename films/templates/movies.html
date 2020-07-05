@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+    <div class="container align-content-center align-items-center"style="padding: 4rem; margin-right: 12rem;">
+        <div class="row justify-content-center">
+                {% for movie in movies %}
+            <div class="card col-3 mb-2">
+                {% if movie.poster %}
+                    <img src='{{ movie.poster.url }}' class="card-img" style="width:fit-content; height: 14rem;">
+                {% endif %}
+                <div class="card-body">
+                    <a href="{{movie.get_absolute_url}}"><h3 class="card-title">{{movie.title}}</h3></a>
+                    <h6 class="card-title">Directed by: <b>{{movie.director}}</b></h6>
+                    <p class="card-text">{{movie.description}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+<!-- style="width: 15rem; height: auto; margin-left: 3px;" -->
+
+
