@@ -10,18 +10,15 @@ import BaseRouter from "./routes.js";
 import Footer from "./containers/Footer";
 
 export class App extends Component {
-  state = {
-    data: [],
-  };
+  
   componentDidMount() {
     this.props.onTryAutoSignup();
-    console.log(this.state.isAuthenticated)
   }
   render() {
     return (
       <Router>
         <CustomLayout />
-        <BaseRouter data={this.state.result_data}></BaseRouter>
+        <BaseRouter ></BaseRouter>
         <Footer/>
       </Router>
     );

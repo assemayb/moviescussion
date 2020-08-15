@@ -12,7 +12,7 @@ import Login from "./containers/Login";
 const BaseRouter = (props) => (
   <Hoc>
     <Route exact path="/" component={HomepageLayout} />
-    <Route path="/movies" component={MovieList} />
+    <Route exact path="/movies" component={MovieList} />
     <Route path="/movie/:movieID" component={MovieDetail} />
     <Route path="/signup" component={Signup} />
     <Route path="/login" component={Login} />

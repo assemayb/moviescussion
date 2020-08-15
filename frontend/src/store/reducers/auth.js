@@ -4,7 +4,7 @@ import { updateObject } from "../helper";
 const initialState = {
   token: null,
   error: null,
-  loading: false,
+  loading: true,
 };
 
 const authStart = (state, action) => {

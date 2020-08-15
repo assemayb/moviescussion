@@ -1,5 +1,14 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Image, Item, Container, Header, Label } from "semantic-ui-react";
+import {
+  Image,
+  Item,
+  Container,
+  Header,
+  Label,
+  Loader,
+  Segment,
+  Dimmer,
+} from "semantic-ui-react";
 import { endpoint, movieListURL } from "../constants";
 import { authAxios } from "../utils";
 import { Link, Redirect } from "react-router-dom";
@@ -22,17 +31,21 @@ import { useQuery } from "@apollo/react-hooks";
 //   }
 // `;
 
-function MovieList(props) {
+function MovieList({ isAuthenticated, history, token }) {
   const [data1, setData] = useState([]);
-  const { isAuthenticated } = props;
+  const [loadingData, setLoadingData] = useState(true);
+
   useEffect(() => {
+    console.log(token)
+    console.log(isAuthenticated)
+
     const fetchAPI = () => {
       authAxios
         .get(movieListURL)
         .then((res) => {
           setData(res.data);
+          setLoadingData(false);
         })
-
         .catch((error) => {
           console.log(error);
         });
@@ -41,25 +54,36 @@ function MovieList(props) {
   }, []);
 
   const handleItemClick = (id) => {
-    props.history.push(`/movie/${id}/`);
+    history.push(`/movie/${id}/`);
   };
 
   if (!isAuthenticated) {
-    return <Redirect to="/login" />;
-  }
-  {
+    return <Redirect to="/login"/>;
+  } else {
     return (
       <Container>
+        {loadingData && (
+          <Container>
+            <Segment>
+              <Dimmer active inverted>
+                <Loader size="large">Loading</Loader>
+              </Dimmer>
+              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+            </Segment>
+          </Container>
+        )}
         <Container fluid>
           <Item.Group style={{ padding: "3rem" }}>
             {data1.map((movie) => (
               <Item key={movie.id} style={{ marginTop: "1rem" }}>
                 {movie.poster ? (
-                    <Item.Image
-                      onClick={() => handleItemClick(movie.id)}
-                      size="small"
-                      src={movie.poster}
-                    />
+                  <Item.Image
+                    onClick={() => handleItemClick(movie.id)}
+                    size="small"
+                    src={movie.poster}
+                  />
                 ) : (
                   <Image size="small">
                     <Label content="Image not found!" icon="warning" />
@@ -85,6 +109,7 @@ function MovieList(props) {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.auth.token,
     isAuthenticated: state.auth.token !== null,
   };
 };
