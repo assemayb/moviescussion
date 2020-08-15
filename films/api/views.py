@@ -29,17 +29,20 @@ class MovieDetailView(RetrieveAPIView):
 class AddNewMovie(APIView):
     def post(self, request, *args, **kwargs):
         submitted_form = request.data.get('formData')
-        title = submitted_form['title']
-        director = submitted_form['director']
-        year = submitted_form['year']
-        description = submitted_form['description']
-        movie = Movie.objects.create(
-            title=title,
-            director=director,
-            description=description,
-            production_year=year
-        )
-        return Response(status=HTTP_200_OK)
+        if(submitted_form):
+            title = submitted_form['title']
+            director = submitted_form['director']
+            year = submitted_form['year']
+            description = submitted_form['description']
+            movie = Movie.objects.create(
+                title=title,
+                director=director,
+                description=description,
+                production_year=year
+            )
+            return Response(status=HTTP_200_OK)
+        else:
+            return Response(status=Http404)
 
 
 class AddMovieVotes(APIView):
@@ -80,6 +83,7 @@ class CommentListView(ListAPIView):
         try:
             comments = Comment.objects.all()
             return comments
+            
         except ObjectDoesNotExist:
             return Response(status=HTTP_400_BAD_REQUEST)
 
@@ -88,10 +92,13 @@ class CommetCreateView(APIView):
     def post(self, request, *args, **kwargs):
         movie_id = self.request.data['movie_id']
         movie_comment = self.request.data['movie_comment']
-        comments = Comment.objects.create(
-            user=self.request.user,
-            text=movie_comment,
-            movie_id=movie_id
-        )
-        comments.save()
-        return Response(data='tmam', status=HTTP_200_OK)
+        if movie_id and movie_comment:
+            comments = Comment.objects.create(
+                user=self.request.user,
+                text=movie_comment,
+                movie_id=movie_id
+            )
+            comments.save()
+            return Response(data='done', status=HTTP_200_OK)
+        else:
+            return Response(data="some field is missing", status=HTTP_400_BAD_REQUEST)

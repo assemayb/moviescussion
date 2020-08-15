@@ -2,11 +2,11 @@ import React, { Fragment } from "react";
 import { Segment, List, Divider, Container } from "semantic-ui-react";
 export default function Footer() {
   return (
-    <Fragment>
+    <>
       <Segment
         inverted
         vertical
-        style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
+        style={{ padding: "2rem"}}
       >
         <Container textAlign="center">
           <Divider inverted section />
@@ -18,6 +18,6 @@ export default function Footer() {
           </List>
         </Container>
       </Segment>
-    </Fragment>
+    </>
   );
 }

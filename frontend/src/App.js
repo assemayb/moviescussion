@@ -10,10 +10,14 @@ import BaseRouter from "./routes.js";
 import Footer from "./containers/Footer";
 
 export class App extends Component {
-  
-  componentDidMount() {
+
+  componentWillMount(){
     this.props.onTryAutoSignup();
   }
+  
+  // componentDidMount() {
+  //   this.props.onTryAutoSignup();
+  // }
   render() {
     return (
       <Router>

@@ -58,7 +58,7 @@ function MovieList({ isAuthenticated, history, token }) {
   };
 
   if (!isAuthenticated) {
-    return <Redirect to="/login"/>;
+    return <Redirect to="/"/>;
   } else {
     return (
       <Container>

@@ -10,6 +10,7 @@ import {
   Form,
   Radio,
   List,
+  Loader,
 } from "semantic-ui-react";
 import axios from "axios";
 import CountUp from "react-countup";
@@ -31,7 +32,7 @@ class MovieDetail extends Component {
     actualVotesValues: null,
     similarMovies: [],
     movieComment: "",
-    comments: [],
+    comments: null,
   };
   countvotes = (array = []) => {
     let val = 0;
@@ -75,6 +76,7 @@ class MovieDetail extends Component {
     const id = this.props.match.params.movieID;
     authAxios.get("http://localhost:8000/api/get_comment").then((res) => {
         let arr = [];
+        console.log(res.data)
         if (res.data.length > 0) {
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
@@ -118,7 +120,7 @@ class MovieDetail extends Component {
     const movieID = this.props.match.params.movieID;
     if (movieComment.length > 1) {
       authAxios
-        .post(movieAddComment, { movieComment, movieID })
+        .post(movieAddComment, { movie_comment: movieComment, movie_id: movieID })
         .then(() => {
           this.handleGetComments();
         });
@@ -221,7 +223,10 @@ class MovieDetail extends Component {
                   <Container style={{ padding: "0.5rem" }}>
                     <Header>Similar Movies</Header>
                   </Container>
-                  {similarMovies.length > 1 ? (
+                  {similarMovies === 0 && (
+                    <Loader size="small" active/>
+                  )}
+                  {similarMovies.length > 0 ? (
                     <List
                       divided
                       relaxed
@@ -287,7 +292,7 @@ class MovieDetail extends Component {
                       </Button>
                     </Container>
                   </Form>
-                  {comments.length > 0 ? (
+                  {comments !== null ? (
                     <List
                       divided
                       relaxed
@@ -310,7 +315,7 @@ class MovieDetail extends Component {
                       ))}
                     </List>
                   ) : (
-                    <p></p>
+                    <Loader active/>
                   )}
                 </Container>
               </Grid.Row>

@@ -14,7 +14,7 @@ class Movie(models.Model):
     def __str__(self):
         return "{}- {}".format(self.pk, self.title)
 
-    def get_absolute_url(self)
+    def get_absolute_url(self):
         return reverse('films:rate', kwargs={
             'pk': self.pk
         })

@@ -9,6 +9,7 @@ import {
   Sidebar,
   Visibility,
   Form,
+  Container,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -108,8 +109,8 @@ class HomepageLayout extends Component {
   render() {
     const { isAuthenticated } = this.props;
     return (
-      <ResponsiveContainer style={{}}>
-        <Segment style={{ padding: "8em 0em", height: '100%' }} vertical>
+      <Container style={{height: '70vh'}}>
+        <Segment style={{ padding: "8em 0em"}} vertical>
           <Grid container stackable verticalAlign="middle" style={{ height: '20rem'}}>
             <Grid.Row>
               <Grid.Column width={8}>
@@ -176,7 +177,7 @@ class HomepageLayout extends Component {
             </Grid.Row>
           </Grid>
         </Segment>
-      </ResponsiveContainer>
+      </Container>
     );
   }
 }
